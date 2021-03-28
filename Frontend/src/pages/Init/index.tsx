@@ -22,7 +22,29 @@ import axios from 'axios';
 const Init = () => {
   const navigation = useNavigation();
   const isFocused = useIsFocused();
-  const { keyBoardShow, changeKeyBoardShow } = useSearchProfile();  
+  const {summonerName, changeSummonerName, keyBoardShow, changeKeyBoardShow} = useSearchProfile();
+
+  useEffect(() => {
+    
+    verifyFavoriteUser();
+  }, [isFocused]);
+
+
+  const verifyFavoriteUser = async() =>{
+
+    try {
+        const favoriteSummoner = await AsyncStorage.getItem('favorite');
+        if (favoriteSummoner !== null) {
+          // We have data!!
+          changeSummonerName(favoriteSummoner);
+          navigation.navigate('Profile');
+          
+        }
+      } catch (error) {
+        // Error retrieving data
+    }
+  }
+  
 
   return (
     <>
