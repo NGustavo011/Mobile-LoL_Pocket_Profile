@@ -48,7 +48,63 @@ const Profile: React.FC = () => {
   }
 
   const handleNavigateMarkFavorite = async() =>{
-   
+    if(!isFavorite){
+      Alert.alert(
+        "FAVORITO",
+        "Deseja marcar usuário como favorito?",
+        [
+          {
+            text: "Não",
+            onPress: () => console.log("Favorito não foi desmarcado"),
+            style: "cancel"
+          },
+          {
+            text: "Sim",
+            onPress: async() => {
+              try {
+                await AsyncStorage.setItem(
+                  'favorite',
+                  summonerName
+                );
+                console.log(`${summonerName} marcado como favorito`);
+                //changeFavoriteSummoner(summonerName);
+              } catch (error) {
+                // Error saving data
+                console.log(error);
+                console.log("Erro ao marcar usuário como favorito");
+              }
+              setIsFavorite(true);
+            }
+          },
+        ]
+      );    
+    }else{
+      Alert.alert(
+        "FAVORITO",
+        "Deseja desmarcar usuário como favorito?",
+        [
+          {
+            text: "Não",
+            onPress: () => console.log("Favorito não foi desmarcado"),
+            style: "cancel"
+          },
+          {
+            text: "Sim",
+            onPress: async() => {
+              try {
+                await AsyncStorage.removeItem(
+                  'favorite'
+                );
+              } catch (error) {
+                // Error saving data
+                console.log("Erro ao desmarcar usuário como favorito");
+              }
+              setIsFavorite(false);
+            }
+          },
+        ]
+      );
+    }  
   }
 
   useEffect(() => {
