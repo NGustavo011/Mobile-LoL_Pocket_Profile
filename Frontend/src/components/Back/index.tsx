@@ -51,7 +51,41 @@ const Back = ({ isHomePage, inProfile }: BackProps) => {
   // }, [isFocused])
 
   const handleNavigateBack = async () => {
-    navigation.goBack();
+
+    let isFavorite = false;
+
+    try {
+      const favoriteSummoner = await AsyncStorage.getItem('favorite');
+      if (favoriteSummoner !== null) {
+        // We have data!!
+        if(favoriteSummoner == summonerName)
+          isFavorite = true;
+      }
+      } catch (error) {
+        // Error retrieving data
+      }
+
+      if(isHomePage){
+        Alert.alert(
+          "SAIR",
+          "Deseja sair do aplicativo?",
+          [
+            {
+              text: "Não",
+              style: "cancel"
+            },
+            {
+              text: "Sim",
+              onPress: async() => {
+                BackHandler.exitApp();
+              }
+            },
+          ]
+        );
+      }
+      else{
+          navigation.goBack();
+      }
   }
 
   BackHandler.addEventListener('hardwareBackPress', function() {
