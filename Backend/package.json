@@ -5,7 +5,8 @@
   "license": "MIT",
   "scripts": {
     "dev": "ts-node-dev --inspect --transpile-only --ignore-watch node_modules src/server.ts",
-    "build": "tsc"
+    "build": "tsc",
+    "start:prod": "set NODE_ENV=production && node dist/server"
   },
   "dependencies": {
     "@types/cors": "^2.8.10",
