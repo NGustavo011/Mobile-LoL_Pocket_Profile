@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { BackHandler, Alert } from 'react-native';
-import { useNavigation, useIsFocused } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
 import {useSearchProfile} from '../../hooks/SearchProfile'
 
@@ -27,7 +27,7 @@ const Back = ({ isHomePage, inProfile }: BackProps) => {
   const navigation = useNavigation();
   const {summonerName, changeSummonerName, newSearch, changeNewSearch} = useSearchProfile();
 
-  const isFocused = useIsFocused();
+  //const isFocused = useIsFocused();
 
   const handleNavigateBack = async () => {
 
