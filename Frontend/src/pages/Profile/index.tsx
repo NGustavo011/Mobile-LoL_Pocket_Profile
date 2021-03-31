@@ -135,6 +135,7 @@ const Profile: React.FC = () => {
     
     if(summonerName === ""){
       setErrorSearch(true);
+      setIsFavorite(false);
       setLoading(false);
       return;
     }
@@ -154,6 +155,7 @@ const Profile: React.FC = () => {
         verifyIsFavorite(response.data.name);
       }).catch((error) =>{
         setErrorSearch(true);
+        setIsFavorite(false);
       }).finally(()=>{
         setLoading(false);
       });

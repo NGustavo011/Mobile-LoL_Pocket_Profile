@@ -29,27 +29,6 @@ const Back = ({ isHomePage, inProfile }: BackProps) => {
 
   const isFocused = useIsFocused();
 
-  // useEffect(()=>{
-  //   navigation.addListener('beforeRemove', (e) => {
-  //     // Prevent default behavior of going back
-  //     e.preventDefault();  
-  //     console.log("TESTE");
-        
-  //     if (e.data.action.type === 'GO_BACK') {
-  //         e.preventDefault();
-  //         console.log(e);
-  //         //console.log(e);     
-  //         if(e.target?.includes("Profile")) {
-  //           console.log(e.target);
-  //           verifyFavoriteUser();
-  //         } 
-  //         else{
-  //           navigation.goBack();
-  //         }
-  //       }
-  //   });
-  // }, [isFocused])
-
   const handleNavigateBack = async () => {
 
     let isFavorite = false;
@@ -84,8 +63,30 @@ const Back = ({ isHomePage, inProfile }: BackProps) => {
         );
       }
       else{
+        if(inProfile)
+          verifyFavoriteUser();
+        else
           navigation.goBack();
       }
+  }
+
+  const verifyFavoriteUser = async() =>{
+    let isFavorite = false;
+
+    try {
+      const favoriteSummoner = await AsyncStorage.getItem('favorite');
+        if (favoriteSummoner !== null) {
+          // We have data!!
+          console.log("ENTROU TOTAL");
+          changeSummonerName(favoriteSummoner);
+          //navigation.navigate('Profile');
+        }else{
+          navigation.goBack();
+        }
+      } catch (error) {
+        // Error retrieving data
+      }
+      
   }
 
   BackHandler.addEventListener('hardwareBackPress', function() {
@@ -95,7 +96,6 @@ const Back = ({ isHomePage, inProfile }: BackProps) => {
 
   return (
     <>
-    
         <styles.Wrapper>
             <styles.ButtonBack onPress={handleNavigateBack}>
                 <styles.ImageBack source={
@@ -103,7 +103,6 @@ const Back = ({ isHomePage, inProfile }: BackProps) => {
                 } style={{width: 31.5, height: 30.5}} ></styles.ImageBack>
             </styles.ButtonBack> 
         </styles.Wrapper>
-
     </>
   );
 }
