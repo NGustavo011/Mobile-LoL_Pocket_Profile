@@ -29,6 +29,17 @@ const Back = ({ isHomePage, inProfile }: BackProps) => {
 
   //const isFocused = useIsFocused();
 
+  useEffect(()=>{
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', function() {
+      handleNavigateBack();
+      return true;
+    });
+
+    
+    return ()=>backHandler.remove();
+
+  },[BackHandler, isHomePage])
+
   const handleNavigateBack = async () => {
 
     let isFavorite = false;
@@ -43,7 +54,7 @@ const Back = ({ isHomePage, inProfile }: BackProps) => {
       } catch (error) {
         // Error retrieving data
       }
-
+      console.log(isHomePage);
       if(isHomePage){
         Alert.alert(
           "SAIR",
@@ -88,11 +99,6 @@ const Back = ({ isHomePage, inProfile }: BackProps) => {
       }
       
   }
-
-  BackHandler.addEventListener('hardwareBackPress', function() {
-    handleNavigateBack();
-    return true;
-  });
 
   return (
     <>
