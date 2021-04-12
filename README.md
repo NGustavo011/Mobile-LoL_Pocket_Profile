@@ -1,3 +1,6 @@
+NOME: GUSTAVO DOS SANTOS NOGUEIRA
+RA: 181010
+
 # Mobile-LoL_Pocket_Profile
 
 --DESCRIÇÃO--
