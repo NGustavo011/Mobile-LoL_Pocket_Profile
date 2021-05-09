@@ -101,7 +101,6 @@ const Back = ({ isHomePage, inProfile }: BackProps) => {
   }
 
   return (
-    <>
         <styles.Wrapper>
             <styles.ButtonBack onPress={handleNavigateBack}>
                 <styles.ImageBack source={
@@ -109,7 +108,6 @@ const Back = ({ isHomePage, inProfile }: BackProps) => {
                 } style={{width: 31.5, height: 30.5}} ></styles.ImageBack>
             </styles.ButtonBack> 
         </styles.Wrapper>
-    </>
   );
 }
 

@@ -12,6 +12,7 @@ import notFound from '../../assets/NotFound.png';
 
 import Background from '../../components/Background';
 import Back from '../../components/Back';
+import LogOut from '../../components/LogOut';
 import Search from '../../components/Search';
 import Logo from '../../components/Logo';
 
@@ -167,6 +168,7 @@ const Profile: React.FC = () => {
       <Background>
         <styles.Wrapper>
           <Back isHomePage={isFavorite} inProfile={true}/>
+          <LogOut/>
           <styles.Container>
             {!keyBoardShow &&(
               <>

@@ -10,7 +10,8 @@ import notFound from '../../assets/NotFound.png';
 
 import Background from '../../components/Background';
 import Back from '../../components/Back';
-import Search from '../../components/Search';
+import LogOut from '../../components/LogOut';
+
 import Logo from '../../components/Logo';
 
 import api from '../../service/api'
@@ -89,6 +90,7 @@ const Mastery: React.FC = () => {
       <Background>
         <styles.Wrapper>
           <Back />
+          <LogOut/>
           <styles.Container>
             <Logo />
             <styles.MasteryWrapper>

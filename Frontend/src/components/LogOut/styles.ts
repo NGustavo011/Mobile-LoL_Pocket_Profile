@@ -10,15 +10,14 @@ export const Wrapper = styled(View)`
     flex-direction:column;
     margin-top: 5px;
     position: absolute;
-    left: 5%;
+    left: 85%;
     top: 0px;
 `
 
-export const ButtonBack = styled(TouchableOpacity)`
+export const ButtonLogout = styled(TouchableOpacity)`
 `
 
 
-export const ImageBack = styled(Image)`
+export const ImageLogout = styled(Image)`
     margin-top: 30px;
-    
 `

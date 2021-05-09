@@ -25,7 +25,6 @@ const Init = () => {
   const {summonerName, changeSummonerName, keyBoardShow, changeKeyBoardShow} = useSearchProfile();
 
   useEffect(() => {
-    
     verifyFavoriteUser();
   }, [isFocused]);
 
