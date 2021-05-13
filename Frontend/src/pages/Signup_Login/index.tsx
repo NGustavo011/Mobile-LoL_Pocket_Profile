@@ -26,7 +26,7 @@ import * as styles from './styles';
 
 const Signup_Login: React.FC = () => {
 
-  const {keyBoardShow, changeKeyBoardShow} = useSearchProfile()
+  const {keyBoardShow, changeKeyBoardShow, summonerName, changeSummonerName} = useSearchProfile()
 
   const [option, setOption] = useState('Login');
 
@@ -37,7 +37,7 @@ const Signup_Login: React.FC = () => {
   const navigation = useNavigation();
 
   useEffect(() => {
-    verifyLogin();
+    //verifyLogin();
     Keyboard.addListener("keyboardDidShow", _keyboardDidShow);
     Keyboard.addListener("keyboardDidHide", _keyboardDidHide);
 
@@ -86,7 +86,7 @@ const Signup_Login: React.FC = () => {
             ]
         );
 
-        navigation.navigate("Init");
+        verifyInitialScreen();
     }).catch(error =>{
         const errorCode = error.code;
         const errorMessage = error.message;
@@ -103,6 +103,30 @@ const Signup_Login: React.FC = () => {
           );
     })
   }
+
+  const verifyInitialScreen = async() =>{
+    try {
+
+      try {
+        const favoriteSummoner = await AsyncStorage.getItem('favorite');
+          if(favoriteSummoner!=null)
+          {
+            changeSummonerName(favoriteSummoner);
+            navigation.navigate("Profile");
+            console.log("ENTROU PERFIL");
+          }
+          else{
+            navigation.navigate("Init");
+            console.log("ENTROU INIT");
+          }
+
+      } catch (error) {
+        // Error saving data
+      }  
+    } catch (error) {
+      // Error retrieving data
+    }
+} 
 
   const setLogin = async() =>{
     try {
@@ -123,7 +147,8 @@ const Signup_Login: React.FC = () => {
     try {
         const emailLogged = await AsyncStorage.getItem('email');
         console.log(`${emailLogged} já logado`);
-        navigation.navigate("Init");
+        if(emailLogged!=null)
+          navigation.navigate("Init");
     }catch (error) {
         // Error saving data
         console.log("Nenhuma pessoa logada");

@@ -12,6 +12,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 import Background from '../../components/Background';
 import Back from '../../components/Back';
+import LogOut from '../../components/LogOut';
 import Search from '../../components/Search';
 import Logo from '../../components/Logo';
 // import { Container } from './styles';
@@ -50,6 +51,7 @@ const Init = () => {
       <Background>
         <styles.Wrapper>
           <Back isHomePage={true}/>
+          <LogOut/>
           <styles.Container>
           {!keyBoardShow &&(
               <>

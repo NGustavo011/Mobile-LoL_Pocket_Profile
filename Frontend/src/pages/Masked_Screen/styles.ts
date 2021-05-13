@@ -8,7 +8,6 @@ export const Wrapper = styled(View)`
     flex-direction:column;
     position: relative;
     flex: 1;
-    background-color: black;
 `;
 
 export const CenterText = styled(Text)`

@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 
+import {useSearchProfile} from '../../hooks/SearchProfile'
+
+import Background from '../../components/Background';
+import Logo from '../../components/Logo';
+
 import AsyncStorage from '@react-native-community/async-storage';
 
 import * as styles from './styles';
@@ -9,8 +14,7 @@ import * as styles from './styles';
 
 const Masked_Screen = () => {
   const navigation = useNavigation();
-  const [logged, setLogged] = useState(false);
-  const [favorite, setFavorite] = useState(false);
+  const {summonerName, changeSummonerName} = useSearchProfile();
 
   useEffect(() => {
     verifyInitialScreen();
@@ -20,44 +24,42 @@ const Masked_Screen = () => {
   const verifyInitialScreen = async() =>{
       try {
         const emailLogged = await AsyncStorage.getItem('email');
-        console.log(`${emailLogged} já logado`);
-        setLogged(true);
 
         try {
           const favoriteSummoner = await AsyncStorage.getItem('favorite');
-          console.log(`${favoriteSummoner} já definido como favorito`);
-          setFavorite(true);
-          } catch (error) {
-          // Error retrieving data
-        }
-
-        if(emailLogged!=null){
-          if(favorite!=null)
-          {
-            navigation.navigate("Profile");
-            console.log("ENTROU PERFIL");
+          if(emailLogged!=null){
+            if(favoriteSummoner!=null)
+            {
+              changeSummonerName(favoriteSummoner);
+              navigation.navigate("Profile");
+              console.log("ENTROU PERFIL");
+            }
+            else{
+              navigation.navigate("Init");
+              console.log("ENTROU INIT");
+            }
+              
+          }else{
+            navigation.navigate("Signup_Login");
+            console.log("ENTROU EMAIL");
           }
-          else{
-            navigation.navigate("Init");
-            console.log("ENTROU INIT");
-          }
-            
-        }else{
-          navigation.navigate("Signup_Login");
-          console.log("ENTROU EMAIL")
-        }
-
+  
         } catch (error) {
-        // Error saving data
-        console.log("Nenhuma pessoa logada");
-      }  
+          // Error saving data
+        }  
+      } catch (error) {
+        // Error retrieving data
+      }
   } 
   
 
   return (
     <>
-      <styles.Wrapper>
-      </styles.Wrapper>
+      <Background>
+        <styles.Wrapper>
+          <Logo />
+        </styles.Wrapper>
+      </Background>
     </>
   );
 }
