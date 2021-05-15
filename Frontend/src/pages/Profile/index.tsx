@@ -19,6 +19,7 @@ import Logo from '../../components/Logo';
 import api from '../../service/api'
 
 import AsyncStorage from '@react-native-community/async-storage';
+import {firebaseFireStore} from '../../config/firebase'
 
 import axios from 'axios';
 
@@ -63,10 +64,12 @@ const Profile: React.FC = () => {
             text: "Sim",
             onPress: async() => {
               try {
-                await AsyncStorage.setItem(
-                  'favorite',
-                  summonerName
-                );
+                const email = await AsyncStorage.getItem('email');
+                const response = await firebaseFireStore.collection('favorites').where('email', '==', email).get();                
+                const res = await firebaseFireStore.collection('favorites').doc(response.docs[0].id).update({
+                  email: email,
+                  favoriteSummoner: summonerName
+                });
                 console.log(`${summonerName} marcado como favorito`);
                 //changeFavoriteSummoner(summonerName);
               } catch (error) {
@@ -93,9 +96,14 @@ const Profile: React.FC = () => {
             text: "Sim",
             onPress: async() => {
               try {
-                await AsyncStorage.removeItem(
-                  'favorite'
-                );
+                const email = await AsyncStorage.getItem('email');
+                const response = await firebaseFireStore.collection('favorites').where('email', '==', email).get();                
+                const res = await firebaseFireStore.collection('favorites').doc(response.docs[0].id).update({
+                  email: email,
+                  favoriteSummoner: ""
+                });
+
+                console.log("Registro removido");
               } catch (error) {
                 // Error saving data
                 console.log("Erro ao desmarcar usuário como favorito");
@@ -118,8 +126,11 @@ const Profile: React.FC = () => {
     setIsFavorite(false);
 
     try {
-      const favoriteSummoner = await AsyncStorage.getItem('favorite');
-      if (favoriteSummoner !== null) {
+      const email = await AsyncStorage.getItem('email');
+
+      const response = await firebaseFireStore.collection('favorites').where('email', '==', email).get();
+      const { favoriteSummoner } = response.docs[0].data();
+      if (favoriteSummoner) {
         // We have data!!
         console.log(favoriteSummoner + " " + summonerNameAux)
         if(favoriteSummoner == summonerNameAux)

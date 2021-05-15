@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import * as styles from './styles';
 
-import backButton from '../../assets/BackButton.png';
+import logout from '../../assets/Logout.png';
 
 import AsyncStorage from '@react-native-community/async-storage';
 const LogOut: React.FC = () => {
@@ -50,7 +50,7 @@ const LogOut: React.FC = () => {
         <styles.Wrapper>
             <styles.ButtonLogout onPress={handleNavigateLogOut}>
                 <styles.ImageLogout source={
-                    backButton
+                    logout
                 } style={{width: 31.5, height: 30.5}} ></styles.ImageLogout>
             </styles.ButtonLogout> 
         </styles.Wrapper>

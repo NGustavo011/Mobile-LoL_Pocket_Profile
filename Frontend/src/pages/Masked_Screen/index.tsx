@@ -7,6 +7,7 @@ import Background from '../../components/Background';
 import Logo from '../../components/Logo';
 
 import AsyncStorage from '@react-native-community/async-storage';
+import {firebaseFireStore} from '../../config/firebase'
 
 import * as styles from './styles';
   
@@ -24,24 +25,24 @@ const Masked_Screen = () => {
   const verifyInitialScreen = async() =>{
       try {
         const emailLogged = await AsyncStorage.getItem('email');
-
         try {
-          const favoriteSummoner = await AsyncStorage.getItem('favorite');
+          console.log(emailLogged);
           if(emailLogged!=null){
-            if(favoriteSummoner!=null)
+            const response = await firebaseFireStore.collection('favorites').where('email', '==', emailLogged).get();
+            console.log(response.docs[0].data);
+            const { favoriteSummoner } = response.docs[0].data();
+            console.log(favoriteSummoner);
+
+            if(favoriteSummoner)
             {
               changeSummonerName(favoriteSummoner);
               navigation.navigate("Profile");
-              console.log("ENTROU PERFIL");
             }
             else{
               navigation.navigate("Init");
-              console.log("ENTROU INIT");
-            }
-              
+            }   
           }else{
             navigation.navigate("Signup_Login");
-            console.log("ENTROU EMAIL");
           }
   
         } catch (error) {

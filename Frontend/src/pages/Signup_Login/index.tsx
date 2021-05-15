@@ -6,6 +6,7 @@ import { ActivityIndicator, KeyboardAvoidingView, Platform, Keyboard, Alert } fr
 import {useSearchProfile} from '../../hooks/SearchProfile'
 
 import AsyncStorage from '@react-native-community/async-storage';
+import {firebaseFireStore} from '../../config/firebase';
 
 import Background from '../../components/Background';
 import Back from '../../components/Back';
@@ -106,32 +107,30 @@ const Signup_Login: React.FC = () => {
 
   const verifyInitialScreen = async() =>{
     try {
-
-      try {
-        const favoriteSummoner = await AsyncStorage.getItem('favorite');
-          if(favoriteSummoner!=null)
-          {
-            changeSummonerName(favoriteSummoner);
-            navigation.navigate("Profile");
-            console.log("ENTROU PERFIL");
-          }
-          else{
-            navigation.navigate("Init");
-            console.log("ENTROU INIT");
-          }
-
-      } catch (error) {
-        // Error saving data
-      }  
+      const response = await firebaseFireStore.collection('favorites').where('email', '==', email.trim()).get();
+      const { favoriteSummoner } = response.docs[0].data();
+      console.log(favoriteSummoner);  
+      if(favoriteSummoner)
+      {
+        changeSummonerName(favoriteSummoner);
+        navigation.navigate("Profile");
+        console.log("ENTROU PERFIL");
+      }
+      else{
+        navigation.navigate("Init");
+        console.log("ENTROU INIT");
+      } 
     } catch (error) {
       // Error retrieving data
+      console.log("ERRO: " + error);
     }
 } 
 
   const setLogin = async() =>{
     try {
+        
         await AsyncStorage.setItem(
-          'email',
+          'email', 
           email
         );
         console.log(`${email} marcado para login automático`);
@@ -143,25 +142,19 @@ const Signup_Login: React.FC = () => {
       }
   }
 
-  const verifyLogin = async()=>{
-    try {
-        const emailLogged = await AsyncStorage.getItem('email');
-        console.log(`${emailLogged} já logado`);
-        if(emailLogged!=null)
-          navigation.navigate("Init");
-    }catch (error) {
-        // Error saving data
-        console.log("Nenhuma pessoa logada");
-    }  
-  }
-
-  const trySignUp = () =>{
+  const trySignUp = async() =>{
+    
     firebaseAuth.createUserWithEmailAndPassword(email, pass).then(userCredential =>{
         const user = userCredential.user;
-        console.log("Logado com sucesso");
         setEmail("");
         setPass("");
         setSecondPass("");
+
+        const response = firebaseFireStore.collection('favorites').add({
+          email: email,
+          favoriteSummoner: ""
+        });
+        console.log("Registro adicionado");
 
         Alert.alert(
             "SUCESSO",
@@ -174,7 +167,6 @@ const Signup_Login: React.FC = () => {
             ]
         );
     }).catch(error =>{
-        const errorCode = error.code;
         const errorMessage = error.message;
         
         Alert.alert(
@@ -187,10 +179,9 @@ const Signup_Login: React.FC = () => {
               },
             ]
           );
+          return;
     })
   }
-
-
 
   return (
     <>

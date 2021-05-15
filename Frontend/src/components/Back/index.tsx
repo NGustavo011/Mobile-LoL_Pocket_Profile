@@ -15,6 +15,7 @@ import * as styles from './styles';
 import backButton from '../../assets/BackButton.png';
 
 import AsyncStorage from '@react-native-community/async-storage';
+import { firebaseFireStore } from '../../config/firebase'
 
 interface BackProps {
     isHomePage?: boolean;
@@ -45,12 +46,19 @@ const Back = ({ isHomePage, inProfile }: BackProps) => {
     let isFavorite = false;
 
     try {
-      const favoriteSummoner = await AsyncStorage.getItem('favorite');
-      if (favoriteSummoner !== null) {
-        // We have data!!
-        if(favoriteSummoner == summonerName)
-          isFavorite = true;
+      const email = await AsyncStorage.getItem('email');
+
+      if(email!=null){
+        const response = await firebaseFireStore.collection('favorites').where('email', '==', email).get();
+        const { favoriteSummoner } = response.docs[0].data();
+
+        if (favoriteSummoner) {
+          // We have data!!
+          if(favoriteSummoner == summonerName)
+            isFavorite = true;
+        }
       }
+
       } catch (error) {
         // Error retrieving data
       }
@@ -85,15 +93,23 @@ const Back = ({ isHomePage, inProfile }: BackProps) => {
     let isFavorite = false;
 
     try {
-      const favoriteSummoner = await AsyncStorage.getItem('favorite');
-        if (favoriteSummoner !== null) {
-          // We have data!!
-          console.log("ENTROU TOTAL");
-          changeSummonerName(favoriteSummoner);
-          //navigation.navigate('Profile');
-        }else{
-          navigation.goBack();
-        }
+      const email = await AsyncStorage.getItem('email');
+
+      if(email != null){
+        const response = await firebaseFireStore.collection('favorites').where('email', '==', email).get();
+        const { favoriteSummoner } = response.docs[0].data();
+
+          if (favoriteSummoner) {
+            // We have data!!
+            console.log("ENTROU TOTAL");
+            changeSummonerName(favoriteSummoner);
+          }else{
+            navigation.goBack();
+          }
+      }else{
+        navigation.goBack();
+      }
+      
       } catch (error) {
         // Error retrieving data
       }

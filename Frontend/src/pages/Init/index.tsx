@@ -5,6 +5,7 @@ import { useNavigation, useIsFocused } from '@react-navigation/native';
 import {useSearchProfile} from '../../hooks/SearchProfile'
 
 import AsyncStorage from '@react-native-community/async-storage';
+import {firebaseFireStore} from '../../config/firebase'
 
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -33,12 +34,14 @@ const Init = () => {
   const verifyFavoriteUser = async() =>{
 
     try {
-        const favoriteSummoner = await AsyncStorage.getItem('favorite');
-        if (favoriteSummoner !== null) {
+      const email = await AsyncStorage.getItem('email');
+
+      const response = await firebaseFireStore.collection('favorites').where('email', '==', email).get();
+      const { favoriteSummoner } = response.docs[0].data();
+        if (favoriteSummoner) {
           // We have data!!
           changeSummonerName(favoriteSummoner);
           navigation.navigate('Profile');
-          
         }
       } catch (error) {
         // Error retrieving data
