@@ -6,7 +6,7 @@ import * as styles from './styles';
 
 import logout from '../../assets/Logout.png';
 
-import AsyncStorage from '@react-native-community/async-storage';
+import { AsyncStorage } from 'react-native';
 const LogOut: React.FC = () => {
 // const LogOut = () => {
   const navigation = useNavigation();

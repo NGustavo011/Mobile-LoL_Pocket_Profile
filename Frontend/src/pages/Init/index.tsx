@@ -4,7 +4,7 @@ import { useNavigation, useIsFocused } from '@react-navigation/native';
 
 import {useSearchProfile} from '../../hooks/SearchProfile'
 
-import AsyncStorage from '@react-native-community/async-storage';
+import { AsyncStorage } from 'react-native';
 import {firebaseFireStore} from '../../config/firebase'
 
 import { LinearGradient } from 'expo-linear-gradient';

@@ -14,7 +14,8 @@ import * as styles from './styles';
 
 import backButton from '../../assets/BackButton.png';
 
-import AsyncStorage from '@react-native-community/async-storage';
+import { AsyncStorage } from 'react-native';
+
 import { firebaseFireStore } from '../../config/firebase'
 
 interface BackProps {
@@ -105,6 +106,8 @@ const Back = ({ isHomePage, inProfile }: BackProps) => {
             changeSummonerName(favoriteSummoner);
           }else{
             navigation.goBack();
+            navigation.navigate("Init");
+            
           }
       }else{
         navigation.goBack();

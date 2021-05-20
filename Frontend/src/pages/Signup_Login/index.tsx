@@ -5,7 +5,7 @@ import { ActivityIndicator, KeyboardAvoidingView, Platform, Keyboard, Alert } fr
 
 import {useSearchProfile} from '../../hooks/SearchProfile'
 
-import AsyncStorage from '@react-native-community/async-storage';
+import { AsyncStorage } from 'react-native';
 import {firebaseFireStore} from '../../config/firebase';
 
 import Background from '../../components/Background';

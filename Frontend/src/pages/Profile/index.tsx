@@ -18,7 +18,7 @@ import Logo from '../../components/Logo';
 
 import api from '../../service/api'
 
-import AsyncStorage from '@react-native-community/async-storage';
+import { AsyncStorage } from 'react-native';
 import {firebaseFireStore} from '../../config/firebase'
 
 import axios from 'axios';

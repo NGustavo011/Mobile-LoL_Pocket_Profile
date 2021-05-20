@@ -6,7 +6,7 @@ import {useSearchProfile} from '../../hooks/SearchProfile'
 import Background from '../../components/Background';
 import Logo from '../../components/Logo';
 
-import AsyncStorage from '@react-native-community/async-storage';
+import { AsyncStorage } from 'react-native';
 import {firebaseFireStore} from '../../config/firebase'
 
 import * as styles from './styles';
@@ -26,8 +26,8 @@ const Masked_Screen = () => {
       try {
         const emailLogged = await AsyncStorage.getItem('email');
         try {
-          console.log(emailLogged);
           if(emailLogged!=null){
+            console.log(emailLogged);
             const response = await firebaseFireStore.collection('favorites').where('email', '==', emailLogged).get();
             console.log(response.docs[0].data);
             const { favoriteSummoner } = response.docs[0].data();

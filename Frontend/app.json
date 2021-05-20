@@ -1,13 +1,20 @@
 {
-  "name": "frontend",
-  "displayName": "frontend",
+  "name": "LoL Pocket Profile",
+  "displayName": "LoL Pocket Profile",
   "expo": {
-    "name": "frontend",
-    "slug": "frontend",
+    "name": "LoL Pocket Profile",
+    "slug": "LoL_Pocket_Profile",
+    "icon": "src/assets/Icon.png",
     "version": "1.0.0",
     "orientation": "portrait",
     "assetBundlePatterns": [
       "**/*"
-    ]
+    ],
+    "android": {
+      "package": "lol.pocket.profile",
+      "adaptiveIcon": {
+        "foregroundImage": "src/assets/Icon.png"
+      }
+    }
   }
 }

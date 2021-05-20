@@ -11,7 +11,7 @@ export const Wrapper = styled(View)`
     margin-top: 5px;
     position: absolute;
     left: 5%;
-    top: 0px;
+    top: 3%;
 `
 
 export const ButtonBack = styled(TouchableOpacity)`

@@ -10,8 +10,8 @@ export const Wrapper = styled(View)`
     flex-direction:column;
     margin-top: 5px;
     position: absolute;
-    left: 85%;
-    top: 0px;
+    left: 87%;
+    top: 3%;
 `
 
 export const ButtonLogout = styled(TouchableOpacity)`

@@ -7,8 +7,9 @@ import { TextInput } from 'react-native-gesture-handler';
 export const SearchWrapper = styled(View)`
     justify-content:center;
     align-items: center;
-    flex-direction:column;  
-    margin-bottom: 25px;
+    flex-direction:column;
+    margin-bottom: 10%;  
+    /* margin-bottom: 25px; */
 `
 
 export const Search = styled(View)`
