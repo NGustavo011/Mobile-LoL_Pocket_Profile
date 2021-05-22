@@ -105,9 +105,7 @@ const Back = ({ isHomePage, inProfile }: BackProps) => {
             console.log("ENTROU TOTAL");
             changeSummonerName(favoriteSummoner);
           }else{
-            navigation.goBack();
             navigation.navigate("Init");
-            
           }
       }else{
         navigation.goBack();

@@ -4,7 +4,7 @@
   "expo": {
     "name": "LoL Pocket Profile",
     "slug": "LoL_Pocket_Profile",
-    "icon": "src/assets/Icon.png",
+    "icon": "src/assets/Icon_Notification.png",
     "version": "1.0.0",
     "orientation": "portrait",
     "assetBundlePatterns": [

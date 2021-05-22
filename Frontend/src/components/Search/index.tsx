@@ -15,9 +15,11 @@ const Search: React.FC = () => {
   const {summonerName, changeSummonerName, newSearch, changeNewSearch, keyBoardShow, changeKeyBoardShow} = useSearchProfile();
   
   const handleNavigateToProfile = () => {
+    
     changeSummonerName(summonerNameAux);
     setSummonerNameAux("");
     //navigation.navigate('Init');
+    _keyboardDidHide();
     navigation.navigate('Profile');
     
     if(newSearch)

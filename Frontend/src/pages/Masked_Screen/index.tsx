@@ -9,6 +9,8 @@ import Logo from '../../components/Logo';
 import { AsyncStorage } from 'react-native';
 import {firebaseFireStore} from '../../config/firebase'
 
+import * as Notifications from 'expo-notifications';
+
 import * as styles from './styles';
   
 
@@ -21,6 +23,15 @@ const Masked_Screen = () => {
     verifyInitialScreen();
   }, []);
 
+  const verifyNotification = () =>{
+    Notifications.setNotificationHandler({
+      handleNotification: async() =>({
+        shouldShowAlert: true,
+        shouldPlaySound: false,
+        shouldSetBadge: false
+      })
+    })
+  }
 
   const verifyInitialScreen = async() =>{
       try {
@@ -35,10 +46,12 @@ const Masked_Screen = () => {
 
             if(favoriteSummoner)
             {
+              notification("Como vai o progresso?", `É sempre bom verificar como os invocadores estão se saindo. Fique de olho em ${favoriteSummoner} e outros jogadores do servidor.`);
               changeSummonerName(favoriteSummoner);
               navigation.navigate("Profile");
             }
             else{
+              notification("Nenhum invocador favorito ainda?", `Selecione um invocador como favorito através do botão de estrela e acompanhe seu progresso de nível e de maestria.`);
               navigation.navigate("Init");
             }   
           }else{
@@ -53,6 +66,24 @@ const Masked_Screen = () => {
       }
   } 
   
+  const notification = async(title:string, body:string) => {
+    verifyNotification();
+    await Notifications.cancelAllScheduledNotificationsAsync();
+    const notificationId = await Notifications.scheduleNotificationAsync(
+      {
+        content: {
+          title: title,
+          body: body,
+          sound: true,
+          priority: Notifications.AndroidNotificationPriority.HIGH,
+        },
+        trigger: {
+          seconds: 30
+        }
+      }
+    )
+    console.log(notificationId);
+  }
 
   return (
     <>
